@@ -1,0 +1,2 @@
+source 'http://ruby.taobao.org'
+gem 'lagunitas','0.0.2'

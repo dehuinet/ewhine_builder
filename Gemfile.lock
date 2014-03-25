@@ -1,0 +1,14 @@
+GEM
+  remote: http://ruby.taobao.org/
+  specs:
+    CFPropertyList (2.2.7)
+    lagunitas (0.0.2)
+      CFPropertyList
+      zip
+    zip (2.0.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  lagunitas (= 0.0.2)
