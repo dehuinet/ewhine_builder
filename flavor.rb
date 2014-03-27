@@ -47,7 +47,7 @@ File.open(provision_file, 'w') { |file| file.write(provision_file_content) }
 plist_file="#{root}/EnterpriseMicroBlog/EnterpriseMicroBlog-Info.plist"
 plist_file_content=File.read(plist_file)
 ["CFBundleDisplayName","CFBundleIdentifier"].each do|key|
-plist_file_content.gsub!(Regexp.new("<key>#{key}.*?<\/string>\n","<key>#{key}</key>\n<string>#{config[key]}</string>\n")
+plist_file_content.gsub!(Regexp.new("<key>#{key}[.\n]*?<\/string>\n"),"<key>#{key}</key>\n<string>#{config[key]}</string>\n")
 end
 
 File.open(plist_file, 'w') { |file| file.write(plist_file_content) }
