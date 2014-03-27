@@ -35,8 +35,8 @@ end
 #modify PROVISIONING
 
 config=YAML::load(File.read("#{flavors}/config/build.yaml"))
-provision_key=config[:PROVISIONING]
-provision_file="#{root}/EnterpriseMicroBlog/EnterpriseMicroBlog.xcodeproj/project.pbxproj"
+provision_key=config["PROVISIONING"]
+provision_file="#{root}/EnterpriseMicroBlog.xcodeproj/project.pbxproj"
 provision_file_content=File.read(provision_file)
 provision_file_content.gsub!(/PROVISIONING_PROFILE =.+?\n/,"PROVISIONING_PROFILE = \"#{provision_key}\";\n")
 provision_file_content.gsub!(/"PROVISIONING_PROFILE\[.+?\n/,"\"PROVISIONING_PROFILE[sdk=iphoneos*]\" = \"#{provision_key}\";\n")
