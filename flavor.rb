@@ -19,7 +19,7 @@ system "cp -r  #{flavors}/*  #{root}/"
 	dest_file="#{root}/EnterpriseMicroBlog/resources/config/#{n}/Strings.strings"
 	puts source_file
 	puts dest_file
-	if File.exist source_file then
+	if File.exist? source_file then
 		dest_file_content=File.read dest_file
 		File.read(source_file).split("\n").each do|k|
 			if k=~/"(.+?)"(\s*)=(\s*)"(.+?)"/ then
@@ -34,7 +34,7 @@ end
 
 #modify PROVISIONING
 
-config=YAML::load(File.read("#{root}/EnterpriseMicroBlog/resources/config/build.yaml"))
+config=YAML::load(File.read("#{flavors}/config/build.yaml"))
 provision_key=config[:PROVISIONING]
 provision_file="#{root}/EnterpriseMicroBlog/EnterpriseMicroBlog.xcodeproj/project.pbxproj"
 provision_file_content=File.read(provision_file)
