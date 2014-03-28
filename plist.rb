@@ -36,7 +36,7 @@ data[:icon_url]="#{base_url}/apple-touch-icon-144.png"
 plist_file << ERB.new(plist_tmp).result(OpenStruct.new(data).instance_eval { binding })
 plist_file.close
 # puts ipa.inspect
-system "scp  -o \"StrictHostKeyChecking no\" -i ~/.ssh/build_server_rsa #{plist_file.path}  publisher@minxing365.com:~/plists"
+system "scp  -o \"StrictHostKeyChecking no\" -i ~/.ssh/id_dsa #{plist_file.path}  publisher@minxing365.com:~/plists"
 
 
 
