@@ -54,7 +54,7 @@ gradle_file="#{root}/enterprise_micro_blog/build.gradle"
 
 gradle_file_content=File.read(gradle_file)
 
-gradle_file_content.gsub!(/productFlavors.*?\{[\s\S]*?\}[\s\S]*?\}/,product_flavors)
+gradle_file_content.gsub!(/productFlavors.*?\{[\s\S]*?\}[\r\n]*?\}/,product_flavors)
 gradle_file_content.gsub!(/sourceSets.*?\{[\s\S]*?instrumentTest[\s\S]*?\}/,source_sets)
 gradle_file_content.gsub!(/versionCode.*\n/,"versionCode #{version_code}\n")
 gradle_file_content.gsub!(/versionName.*\n/,"versionName \"#{version_name}\"\n")
