@@ -31,7 +31,7 @@ data = Hash.new
 data[:version_code]=version_code
 data[:version_name]=version_name
 data[:name]=display_name
-data[:url]="#{base_url}/apps_file/IOS.ipa"
+data[:url]="#{base_url}/apps_file/iOS.ipa"
 data[:icon_url]="#{base_url}/apple-touch-icon-144.png"
 plist_file << ERB.new(plist_tmp).result(OpenStruct.new(data).instance_eval { binding })
 plist_file.close
