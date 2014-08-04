@@ -6,6 +6,8 @@ if command.nil? then
 	return
 end
 
-system "#{command} -o \"StrictHostKeyChecking no\" -i build_server_rsa  song@build.dehuinet.com #{param}"
+home_path=File.expand_path('../', __FILE__)
+
+system "#{command} -o \"StrictHostKeyChecking no\" -i #{home_path}/build_server_rsa  song@build.dehuinet.com #{param}"
 
 
