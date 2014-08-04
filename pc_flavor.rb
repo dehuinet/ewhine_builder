@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'yaml'
 require 'fileutils'
 require 'erb'
