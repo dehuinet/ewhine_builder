@@ -17,6 +17,16 @@ unless File.exist?(flavors) then
 end
  FileUtils.cp_r("#{flavors}/app", "#{root}")
 
+grunt_file="#{root}/Gruntfile.js"
+
+grunt_file_content=File.read(grunt_file)
+
+grunt_file_content.gsub!(/#{platform}:.*,/,"#{platform}: true,")
+
+
+File.open(grunt_file, 'w') { |file| file.write(grunt_file_content) }
+
+
 
 
 config = YAML::load(File.read("#{flavors}/build/config.yaml"))
