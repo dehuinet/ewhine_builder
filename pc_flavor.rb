@@ -20,7 +20,7 @@ end
 
 grunt_file="#{root}/Gruntfile.js"
 
-grunt_file_content=File.read(grunt_file)
+grunt_file_content=IO.read(grunt_file).force_encoding("ISO-8859-1").encode("UTF-8", replace: nil)
 
 grunt_file_content.gsub!(/#{platform}:.*,/,"#{platform}: true,")
 
