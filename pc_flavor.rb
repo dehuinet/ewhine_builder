@@ -22,7 +22,7 @@ grunt_file="#{root}/Gruntfile.js"
 
 grunt_file_content=IO.read(grunt_file).force_encoding("ISO-8859-1").encode("UTF-8", replace: nil)
 
-grunt_file_content.gsub!(/#{platform}:.*,/,"#{platform}: true,")
+grunt_file_content.gsub!(/(#{platform}.*):.*\n/){"#{Regexp.last_match[1]}: true,\n"}
 
 
 File.open(grunt_file, 'w') { |file| file.write(grunt_file_content) }
