@@ -19,9 +19,11 @@ end
  FileUtils.cp_r("#{flavors}/app", "#{root}")
 
 grunt_file="#{root}/Gruntfile.js"
+if RbConfig::CONFIG['target_os'] == "mswin32" then
+grunt_file_content=IO.read(grunt_file).force_encoding("ISO-8859-1").encode("UTF-8", replace: nil)
+else
 grunt_file_content=File.read(grunt_file)
-#grunt_file_content=IO.read(grunt_file).force_encoding("ISO-8859-1").encode("UTF-8", replace: nil)
-
+end
 grunt_file_content.gsub!(/(#{platform}.*):.*\n/){"#{Regexp.last_match[1]}: true,\n"}
 
 
