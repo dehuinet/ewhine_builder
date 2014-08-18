@@ -38,5 +38,17 @@ plist_file.close
 # puts ipa.inspect
 system "scp  -o \"StrictHostKeyChecking no\" -i ~/.ssh/id_dsa #{plist_file.path}  publisher@minxing365.com:~/plists"
 
+#create beta
+
+plist_file_beta = File.open("#{home_path}/plists/#{package_name}_#{hashed_url}_beta.plist", "w+")
+plist_tmp= File.read("#{home_path}/templates/plist.erb")
+data[:url]="#{base_url}/iOS_beta.ipa"
+plist_file_beta << ERB.new(plist_tmp).result(OpenStruct.new(data).instance_eval { binding })
+plist_file_beta.close
+# puts ipa.inspect
+system "scp  -o \"StrictHostKeyChecking no\" -i ~/.ssh/id_dsa #{plist_file_beta.path}  publisher@minxing365.com:~/plists"
+
+
+
 
 
