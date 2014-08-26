@@ -2,14 +2,14 @@ GEM
   remote: http://ruby.taobao.org/
   specs:
     CFPropertyList (2.2.7)
-    binding_of_caller (0.7.2)
-      debug_inspector (>= 0.0.1)
     coderay (1.1.0)
-    debug_inspector (0.0.2)
+    fileutils (0.7)
+      rmagick (>= 2.13.1)
     lagunitas (0.0.2)
       CFPropertyList
       zip
     method_source (0.8.2)
+    netrc (0.7.7)
     ox (2.0.12)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -17,6 +17,9 @@ GEM
       slop (~> 3.4)
     pry-nav (0.2.3)
       pry (~> 0.9.10)
+    rest_client (1.7.3)
+      netrc (~> 0.7.7)
+    rmagick (2.13.3)
     slop (3.5.0)
     zip (2.0.2)
 
@@ -24,8 +27,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  binding_of_caller
-  lagunitas (= 0.0.2)
+  fileutils
+  lagunitas
   ox
   pry
   pry-nav
+  rest_client
