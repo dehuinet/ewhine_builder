@@ -1,17 +1,18 @@
 require 'rest_client'
 require 'json'
 host=ARGV[0]
-client_id=ARGV[1]
-mandatory_upgrade=ARGV[2]
-description=ARGV[3]
-file_path=ARGV[4]
+password=ARGV[1]
+client_id=ARGV[2]
+mandatory_upgrade=ARGV[3]
+description=ARGV[4]
+file_path=ARGV[5]
 
 if host.nil? then
 	puts "need provide host"
 	return
 end
 
-puts password
+
 
 
 response = RestClient.post("#{host}/oauth2/token", :grant_type => "password", :login_name => "admin", :password => password, :app_id => 2, :app_secret => "67bc64352a9c041e75d9635ccafee3b0")
