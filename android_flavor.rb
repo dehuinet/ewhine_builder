@@ -10,7 +10,35 @@ if root.nil? then
 	puts "need root path"
 	return
 end
+
 flavors=flavor_name.split(",")
+
+plugins_path = "#{root}/enterprise_micro_blog/flavors/#{flavors[0]}/plugins"
+
+
+dependencies = "compile fileTree(dir: 'libs', include: '*.jar')\n"
+manifest_srcFile =''
+if File.exist?plugins_path
+  #如果有插件 要创建一个settings.gradle 文件
+  setting = ''
+  Dir.open(plugins_path) do |d| 
+    d.each do |x| 
+      if !(x.start_with? '.') 
+        setting << "include '#{x}'" << "\n"
+        dependencies << "compile project(\":#{x}\")" << "\n"
+        manifest_srcFile << "manifest.srcFile 'flavors/#{flavors[0]}/plugins/#{x}/AndroidManifest.xml'" <<"\n"
+      end
+    end
+    d.each do |x| 
+      if !(x.start_with? '.') 
+        setting << "project(':#{x}').projectDir = new File('flavors/#{flavors[0]}/plugins/#{x}')" << "\n"
+      end
+    end
+  end
+  puts setting
+  File.open("#{root}/enterprise_micro_blog/settings.gradle","w"){|f| f.write setting}
+end 
+dependencies << "}"
 
 product_flavors="productFlavors {"
 
@@ -41,6 +69,7 @@ source_sets = %q{
 		source_sets << %Q{
 			#{flavor}{
 			res.srcDirs = ['flavors/#{flavor}/res']
+			#{manifest_srcFile}
 		}
 	}
 
@@ -55,6 +84,7 @@ gradle_file="#{root}/enterprise_micro_blog/build.gradle"
 
 gradle_file_content=File.read(gradle_file)
 
+gradle_file_content.gsub!(/compile fileTree.*?\([\s\S]*?\)[\s\S]*?\}/,dependencies)
 gradle_file_content.gsub!(/productFlavors.*?\{[\s\S]*?\}\s*?\}/,product_flavors)
 gradle_file_content.gsub!(/sourceSets.*?\{[\s\S]*?instrumentTest[\s\S]*?\}/,source_sets)
 gradle_file_content.gsub!(/versionCode.*\n/,"versionCode #{version_code}\n")
