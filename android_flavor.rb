@@ -1,6 +1,7 @@
 require 'yaml'
 require 'ox'
 require 'pry'
+require 'fileutils'
 root=ARGV[0]
 flavor_name=ARGV[1]
 version_code=ARGV[2]
@@ -109,4 +110,24 @@ puts build_file
 		end
 	end
 	File.open(manifest_file, 'w') { |file| file.write( Ox.dump(manifest_object)) }
+end
+
+#copy jar
+if File.exist?plugins_path
+	Dir.open(plugins_path) do |d| 
+    	d.each do |x| 
+    		if !(x.start_with? '.') 
+      		libs_path = "#{plugins_path}/#{x}/libs"
+      		if File.exist?libs_path
+      			Dir.open(libs_path) do |dir|
+      				dir.each do |jar|
+      					if !(jar.start_with? '.') && !(File.exist?"#{root}/enterprise_micro_blog/libs/#{jar}")
+      						FileUtils.copy "#{libs_path}/#{jar}","#{root}/enterprise_micro_blog/libs/#{jar}"
+      					end
+      				end
+      			end
+      		end
+    	  end
+    	end
+    end
 end
