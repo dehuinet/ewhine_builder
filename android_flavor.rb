@@ -112,7 +112,8 @@ puts build_file
 	File.open(manifest_file, 'w') { |file| file.write( Ox.dump(manifest_object)) }
 end
 
-#copy jar
+#copy jar 一共6层循环 其实是3层 每次目录遍历都得带两层循环 ruby就这样 
+#第一（二）层循环 负责遍历插件plugins目录里有几个插件 第三（四）层循环负责遍历插件工程的libs下的所有jar 第五（六）层循环负责对比这些jar的去除版本信息后时候在主工程里有相同的jar 如果有就不copy了
 if File.exist?plugins_path
 	Dir.open(plugins_path) do |d| 
     	d.each do |x| 
@@ -121,7 +122,27 @@ if File.exist?plugins_path
       		if File.exist?libs_path
       			Dir.open(libs_path) do |dir|
       				dir.each do |jar|
+      				  copyOK = true
       					if !(jar.start_with? '.') && !(File.exist?"#{root}/enterprise_micro_blog/libs/#{jar}")
+      					   m = /-v[0-9]*.jar/.match jar
+      					   if !m.nil?
+      					     #如果插件工程的jar包的名字带类似 xxxx-v4.jar一类的样子 就要注意主工程里是不是也有类似的jar 如果有也不能copy
+                      pre = m.pre_match
+                      Dir.open("#{root}/enterprise_micro_blog/libs") do |m_d|
+                        m_d.each do |m_jar|
+                          #这是minxing主工程里得jar列表
+                          if !(/#{pre}/.match m_jar).nil?
+                            #进去这个逻辑 说明是匹配了 如果匹配了 说明主工程里有类似的jar 就不copy了
+                            copyOK = false
+                            puts "注意：#{jar} 由于主程序目录已经存在完全同名文件或者同名不同版本的文件，因此不进行copy操作"
+                            break
+                          end
+                        end
+                      end
+      					   end
+      					  if !copyOK
+      					    next
+      					  end
       						FileUtils.copy "#{libs_path}/#{jar}","#{root}/enterprise_micro_blog/libs/#{jar}"
       					end
       				end
