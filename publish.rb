@@ -20,7 +20,12 @@ body = response.body
 json = JSON.parse body
 
 access_token =  json["access_token"]
-
+paramsHash={"oauth2_client_version[mandatory_upgrade]"=>mandatory_upgrade,"oauth2_client_version[client_id]"=>client_id,"oauth2_client_version[description]"=>description, :client_version_file  => File.new(file_path, 'rb')
+}
+if ARGV[6] then
+    paramsHash["oauth2_client_version[version]"]=ARGV[6]
+    paramsHash["oauth2_client_version[version_code]"]=ARGV[7]
+end
 
 response = RestClient.post("#{host}/admin/apps/#{client_id}/oauth2_client_versions",{"oauth2_client_version[mandatory_upgrade]"=>mandatory_upgrade,"oauth2_client_version[client_id]"=>client_id,"oauth2_client_version[description]"=>description, :client_version_file  => File.new(file_path, 'rb')
 },:AUTHORIZATION=>"bearer #{access_token}")
