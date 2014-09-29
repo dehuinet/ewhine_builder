@@ -6,7 +6,8 @@ require 'ostruct'
 
 root=ARGV.first
 flavor_name=ARGV[1]
-platform=ARGV.last
+platform=ARGV.ARGV[2]
+version_code=ARGV.ARGV[3]
 if root.nil? then
 	puts "need root path"
 	return
@@ -37,6 +38,7 @@ if "mac"==platform then
     config["app_id"]="4"
     config["app_secret"]="df5042da190e040beaffee92b7a22c7e"
 end
+config["version_code"]=version_code
 config_file = File.open("#{root}/app/scripts/config.js","w+")
 config_tmp = File.read("#{root}/config.js.erb")
 
