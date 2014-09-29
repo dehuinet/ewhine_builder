@@ -6,8 +6,8 @@ require 'ostruct'
 
 root=ARGV.first
 flavor_name=ARGV[1]
-platform=ARGV.ARGV[2]
-version_code=ARGV.ARGV[3]
+platform=ARGV[2]
+version_code=ARGV[3]
 if root.nil? then
 	puts "need root path"
 	return
