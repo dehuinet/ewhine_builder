@@ -35,8 +35,8 @@ File.open(grunt_file, 'w') { |file| file.write(grunt_file_content) }
 
 config = YAML::load(File.read("#{flavors}/build/config.yaml"))
 if "mac"==platform then
-    config["app_id"]="4"
-    config["app_secret"]="df5042da190e040beaffee92b7a22c7e"
+    config["app_id"]="5"
+    config["app_secret"]="15882d54fccfabf55156b644cee99391"
 end
 config["version_code"]=version_code
 config_file = File.open("#{root}/app/scripts/config.js","w+")
