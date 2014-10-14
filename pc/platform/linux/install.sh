@@ -1,24 +1,21 @@
 #!/bin/bash
-if [ $1 == "install" ]; then
-  # install
-  mkdir -p /opt/minxing
-  if [ -d "exe_builds/Minxing/linux32"]; then
-    cp -r ./exe_builds/Minxing/linux32/* /opt/minxing/
-    cp ./exe_builds/Minxing/linux32/minxing.desktop /usr/share/applications/
-  fi
+case $1 in
+  install)
+    # install
+    mkdir -p /opt/minxing
+    chmod +x ./Minxing
+    cp ./minxing.desktop /usr/share/applications/
+    cp -r ./* /opt/minxing/
 
-  if [ -d "exe_builds/Minxing/linux64"]; then
-    cp -r ./exe_builds/Minxing/linux64/* /opt/minxing/
-    cp ./exe_builds/Minxing/linux64/minxing.desktop /usr/share/applications/
-  fi
-
-  echo "installed to /opt/minxing ."
-
-else if [ $1 == "uninstall" ];then
-  # uninstall
-  rm -rf /opt/minxing /usr/share/applications/minxing.desktop
-  echo "deleted."
-else
-  # usage
-  echo "install.sh <install|uninstall>"
-fi
+    echo "installed to /opt/minxing ."
+    ;;
+  uninstall|remove)
+    # uninstall
+    rm -rf /opt/minxing /usr/share/applications/minxing.desktop
+    echo "deleted."
+    ;;
+  *)
+    # usage
+    echo "install.sh <install|uninstall>"
+    exit 1
+esac
