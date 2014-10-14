@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Minxing
+Comment=minxing client
+Comment[zh_CN]=敏行客户端
+Exec=/opt/minxing/Minxing
+Terminal=false
+Type=Application
+Icon=/opt/minxing/icon
+Categories=Office;
