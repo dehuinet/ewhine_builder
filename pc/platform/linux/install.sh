@@ -2,20 +2,20 @@
 case $1 in
   install)
     # install
-    mkdir -p /opt/minxing
+    mkdir -p $HOME/.opt/minxing
     chmod +x ./Minxing
-    cp ./minxing.desktop /usr/share/applications/
-    cp -r ./* /opt/minxing/
+    sed  "s/USER/$USER/g" ./minxing.desktop > $HOME/.local/share/applications/minxing.desktop
+    cp -r ./* $HOME/.opt/minxing
 
-    echo "installed to /opt/minxing ."
+    echo "installed to $HOME/.opt/minxing ."
     ;;
   uninstall|remove)
     # uninstall
-    rm -rf /opt/minxing /usr/share/applications/minxing.desktop
+    rm -rf $HOME/.opt/minxing $HOME/.local/share/applications/minxing.desktop
     echo "deleted."
     ;;
   *)
     # usage
-    echo "install.sh <install|uninstall>"
+    echo "install.sh <install|remove>"
     exit 1
 esac
