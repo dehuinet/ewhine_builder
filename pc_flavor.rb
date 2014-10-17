@@ -9,21 +9,21 @@ flavor_name=ARGV[1]
 platform=ARGV[2]
 version_code=ARGV[3]
 if root.nil? then
-	puts "need root path"
-	return
+  puts "need root path"
+  return
 end
 flavors="#{root}/flavors/#{flavor_name}"
 unless File.exist?(flavors) then
-	puts "flavors :#{flavor_name}: not exist"
-	return
+  puts "flavors :#{flavor_name}: not exist"
+  return
 end
- FileUtils.cp_r("#{flavors}/app", "#{root}")
+FileUtils.cp_r("#{flavors}/app", "#{root}")
 
 grunt_file="#{root}/Gruntfile.js"
 if  "win"==platform then
-grunt_file_content=IO.read(grunt_file).force_encoding("ISO-8859-1").encode("UTF-8", replace: nil)
+  grunt_file_content=IO.read(grunt_file).force_encoding("ISO-8859-1").encode("UTF-8", replace: nil)
 else
-grunt_file_content=File.read(grunt_file)
+  grunt_file_content=File.read(grunt_file)
 end
 grunt_file_content.gsub!(/(#{platform}.*):.*\n/){"#{Regexp.last_match[1]}: true,\n"}
 
@@ -35,8 +35,12 @@ File.open(grunt_file, 'w') { |file| file.write(grunt_file_content) }
 
 config = YAML::load(File.read("#{flavors}/build/config.yaml"))
 if "mac"==platform then
-    config["app_id"]="5"
-    config["app_secret"]="15882d54fccfabf55156b644cee99391"
+  config["app_id"]="5"
+  config["app_secret"]="15882d54fccfabf55156b644cee99391"
+end
+if "linux"==platform then
+  config["app_id"] = "7"
+  config["app_secret"]="15882d54fccfabf55156b644cee99391"
 end
 config["version_code"]=version_code
 config_file = File.open("#{root}/app/scripts/config.js","w+")
@@ -44,5 +48,4 @@ config_tmp = File.read("#{root}/config.js.erb")
 
 config_file << ERB.new(config_tmp).result(OpenStruct.new(config).instance_eval { binding })
 config_file.close
-
 
